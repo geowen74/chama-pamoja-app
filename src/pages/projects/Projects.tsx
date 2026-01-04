@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
 import AddProjectModal from '../../components/modals/AddProjectModal'
-import { FolderKanban, Plus, Download, Wallet, HandCoins, Target, Search, Filter } from 'lucide-react'
+import { FolderKanban, Plus, Download } from 'lucide-react'
 
 const categoryIcons = {
   real_estate: FolderKanban,
@@ -42,9 +42,9 @@ const statusLabels = {
 export default function Projects() {
   const { projects, loans } = useDataStore()
   const canAddProjects = usePermission('add_projects')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [statusFilter, setStatusFilter] = useState<string>('all')
-  const [categoryFilter, setCategoryFilter] = useState<string>('all')
+  const [searchQuery] = useState('')
+  const [statusFilter] = useState<string>('all')
+  const [categoryFilter] = useState<string>('all')
   const [showAddModal, setShowAddModal] = useState(false)
 
   // Calculate loans per project
@@ -58,16 +58,6 @@ export default function Projects() {
     const matchesCategory = categoryFilter === 'all' || project.category === categoryFilter
     return matchesSearch && matchesStatus && matchesCategory
   })
-
-  const totalProjects = projects.length
-  const activeProjects = projects.filter(p => p.status === 'active').length
-  const totalInvestment = projects.reduce((sum, p) => sum + p.totalInvestment, 0)
-  const totalBorrowed = projects.reduce((sum, p) => sum + getProjectBorrowedAmount(p.id), 0)
-  const expectedIncome = projects.reduce((sum, p) => sum + p.expectedIncome, 0)
-  const actualIncome = projects.reduce((sum, p) => sum + p.actualIncome, 0)
-  const avgROI = projects.length > 0 
-    ? projects.reduce((sum, p) => sum + p.roi, 0) / projects.length 
-    : 0
 
   return (
     <div className="space-y-6">
@@ -107,11 +97,6 @@ export default function Projects() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => {
             const CategoryIcon = categoryIcons[project.category]
-            const progress = project.expectedIncome > 0 
-              ? (project.actualIncome / project.expectedIncome) * 100 
-              : 0
-            const projectBorrowed = getProjectBorrowedAmount(project.id)
-            const projectLoansCount = getProjectLoans(project.id).length
 
             const cardContent = (
               <>
