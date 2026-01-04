@@ -48,11 +48,12 @@ export default function Projects() {
   const [showAddModal, setShowAddModal] = useState(false)
 
   // Calculate loans per project
-  const getProjectLoans = (projectId: string) => loans.filter(loan => loan.projectId === projectId)
-  const getProjectBorrowedAmount = (projectId: string) => getProjectLoans(projectId).reduce((sum, loan) => sum + loan.principalAmount, 0)
+  const getProjectLoans = (projectId: string) =>
+    loans.filter(loan => loan.projectId === projectId)
 
   const filteredProjects = projects.filter((project) => {
-    const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       project.description.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesStatus = statusFilter === 'all' || project.status === statusFilter
     const matchesCategory = categoryFilter === 'all' || project.category === categoryFilter
@@ -67,7 +68,9 @@ export default function Projects() {
           <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-700 via-secondary-600 to-accent-600 bg-clip-text text-transparent">
             Project Management
           </h1>
-          <p className="text-gray-500 mt-1">Create and manage investment projects with financial tracking</p>
+          <p className="text-gray-500 mt-1">
+            Create and manage investment projects with financial tracking
+          </p>
         </div>
         <div className="flex gap-3">
           <button className="btn btn-secondary flex items-center gap-2">
@@ -87,10 +90,10 @@ export default function Projects() {
       </div>
 
       {/* Summary cards */}
-      {/* ...keep your summary cards and stats here... */}
+      {/* ...add summary cards and stats here if needed... */}
 
       {/* Filters */}
-      {/* ...keep your filter UI here... */}
+      {/* ...add filter UI here if needed... */}
 
       {/* Projects grid */}
       {filteredProjects.length > 0 ? (
@@ -100,7 +103,6 @@ export default function Projects() {
 
             const cardContent = (
               <>
-                {/* ...your card content here, using project fields... */}
                 <div className="flex items-start justify-between mb-4">
                   <div className={`p-3 rounded-xl ${categoryColors[project.category]}`}>
                     <CategoryIcon size={24} />
@@ -160,51 +162,9 @@ export default function Projects() {
       )}
 
       {/* Add Project Modal */}
-      {showAddModal && (
-        <AddProjectModal onClose={() => setShowAddModal(false)} />
-      )}
-    </div>
-  )
-}// ...existing code...
-  // Calculate loans per project
-  const getProjectLoans = (projectId: string) => loans.filter(loan => loan.projectId === projectId)
-  // Remove this line:
-  // const getProjectBorrowedAmount = (projectId: string) => getProjectLoans(projectId).reduce((sum, loan) => sum + loan.principalAmount, 0)
-// ...existing code...// ...existing imports...
-import ProjectDetails from './pages/projects/ProjectDetails'
-
-// ...inside your routes...
-<Route path="/projects/:id" element={<ProjectDetails />} />// filepath: src/pages/projects/ProjectDetails.tsx
-import { useParams, useNavigate } from 'react-router-dom'
-import { useDataStore } from '../../store/dataStore'
-import { useState } from 'react'
-
-export default function ProjectDetails() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const { projects, updateProject } = useDataStore()
-  const project = projects.find(p => p.id === id)
-  const [editData, setEditData] = useState(project ? { ...project } : {})
-
-  if (!project) return <div>Project not found</div>
-
-  const handleEditChange = (e) => {
-    setEditData({ ...editData, [e.target.name]: e.target.value })
+        {showAddModal && (
+          <AddProjectModal onClose={() => setShowAddModal(false)} />
+        )}
+      </div>
+    )
   }
-
-  const saveEdit = () => {
-    updateProject(project.id, editData)
-    alert('Project updated!')
-  }
-
-  return (
-    <div>
-      <button onClick={() => navigate(-1)}>Back</button>
-      <h2>Edit Project</h2>
-      <input name="name" value={editData.name} onChange={handleEditChange} />
-      <input name="description" value={editData.description} onChange={handleEditChange} />
-      {/* Add more fields as needed */}
-      <button onClick={saveEdit}>Save Changes</button>
-    </div>
-  )
-}
