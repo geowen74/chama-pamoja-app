@@ -9,6 +9,13 @@ export interface User {
   role: 'chairman' | 'vice_chairman' | 'treasurer' | 'vice_treasurer' | 'secretary' | 'vice_secretary' | 'admin' | 'member'
   joinedAt: string
 }
+export interface Project {
+  id: string
+  name: string
+  // ...other fields...
+  loanAmount: number
+  dailyIncome: { date: string; amount: number }[]
+}
 
 // Next of Kin Types
 export interface NextOfKin {
