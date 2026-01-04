@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './store/authStore'
+import { useEffect, useRef } from 'react'
 
 // Layouts
 import AuthLayout from './layouts/AuthLayout'
@@ -45,7 +46,37 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
 
+const INACTIVITY_LIMIT = 10 * 60 * 1000 // 10 minutes in ms
+
 function App() {
+  const logout = useAuthStore(state => state.logout)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    const resetTimer = () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+      timerRef.current = setTimeout(() => {
+        logout()
+        alert('You have been logged out due to inactivity.')
+      }, INACTIVITY_LIMIT)
+    }
+
+    const events = ['mousemove', 'keydown', 'mousedown', 'touchstart']
+
+    events.forEach(event =>
+      window.addEventListener(event, resetTimer)
+    )
+
+    resetTimer()
+
+    return () => {
+      events.forEach(event =>
+        window.removeEventListener(event, resetTimer)
+      )
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
+  }, [logout])
+
   return (
     <Router>
       <Routes>
