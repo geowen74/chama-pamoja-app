@@ -48,8 +48,7 @@ export default function Projects() {
   const [showAddModal, setShowAddModal] = useState(false)
 
   // Calculate loans per project
-  const getProjectLoans = (projectId: string) =>
-    loans.filter(loan => loan.projectId === projectId)
+  // (removed unused getProjectLoans function)
 
   const filteredProjects = projects.filter((project) => {
     const matchesSearch =
