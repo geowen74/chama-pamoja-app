@@ -232,6 +232,27 @@ export const useDataStore = create<DataState>()(
   updateProject: (id, data) => set((state) => ({
     projects: state.projects.map((p) => p.id === id ? { ...p, ...data } : p),
   })),
+
+  // ...existing code...
+updateProjectLoanAmount: (projectId: string, amount: number) => set(state => ({
+  projects: state.projects.map(p =>
+    p.id === projectId ? { ...p, loanAmount: amount } : p
+  )
+})),
+addProjectDailyIncome: (projectId: string, date: string, amount: number) => set(state => ({
+  projects: state.projects.map(p =>
+    p.id === projectId
+      ? {
+          ...p,
+          dailyIncome: [
+            ...(p.dailyIncome || []),
+            { date, amount }
+          ]
+        }
+      : p
+  )
+})),
+// ...existing code...
   
   deleteProject: (id) => set((state) => ({
     projects: state.projects.filter((p) => p.id !== id),
