@@ -1,4 +1,114 @@
+import { useDataStore } from '../../store/dataStore'
 import { useState } from 'react'
+
+export default function Projects() {
+  const { projects, updateProject } = useDataStore()
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editData, setEditData] = useState<any>({})
+
+  const startEdit = (project: any) => {
+    setEditingId(project.id)
+    setEditData({ ...project })
+  }
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditData({ ...editData, [e.target.name]: e.target.value })
+  }
+
+  const saveEdit = () => {
+    updateProject(editingId!, editData)
+    setEditingId(null)
+  }
+
+  return (
+    <div>
+      {projects.map(project => (
+        <div key={project.id} style={{ border: '1px solid #eee', margin: 8, padding: 8 }}>
+          {editingId === project.id ? (
+            <div>
+              <input
+                name="name"
+                value={editData.name}
+                onChange={handleEditChange}
+                placeholder="Project Name"
+              />
+              <input
+                name="description"
+                value={editData.description}
+                onChange={handleEditChange}
+                placeholder="Description"
+              />
+              {/* Add more fields as needed */}
+              <button onClick={saveEdit}>Save</button>
+              <button onClick={() => setEditingId(null)}>Cancel</button>
+            </div>
+          ) : (
+            <>
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+              <button onClick={() => startEdit(project)}>Edit</button>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}import { useDataStore } from '../../store/dataStore'
+import { useState } from 'react'
+
+export default function Projects() {
+  const { projects, updateProject } = useDataStore()
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editData, setEditData] = useState<any>({})
+
+  const startEdit = (project: any) => {
+    setEditingId(project.id)
+    setEditData({ ...project })
+  }
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditData({ ...editData, [e.target.name]: e.target.value })
+  }
+
+  const saveEdit = () => {
+    updateProject(editingId!, editData)
+    setEditingId(null)
+  }
+
+  return (
+    <div>
+      {projects.map(project => (
+        <div key={project.id} style={{ border: '1px solid #eee', margin: 8, padding: 8 }}>
+          {editingId === project.id ? (
+            <div>
+              <input
+                name="name"
+                value={editData.name}
+                onChange={handleEditChange}
+                placeholder="Project Name"
+              />
+              <input
+                name="description"
+                value={editData.description}
+                onChange={handleEditChange}
+                placeholder="Description"
+              />
+              {/* Add more fields as needed */}
+              <button onClick={saveEdit}>Save</button>
+              <button onClick={() => setEditingId(null)}>Cancel</button>
+            </div>
+          ) : (
+            <>
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+              <button onClick={() => startEdit(project)}>Edit</button>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
