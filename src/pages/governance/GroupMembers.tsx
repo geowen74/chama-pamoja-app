@@ -1,6 +1,8 @@
-import { useState } from 'react'
+
+import AddMemberModal from '../../components/modals/AddMemberModal'
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
+import { useState } from 'react'
 import {
   UsersRound,
   Search,
@@ -53,6 +55,7 @@ export default function GroupMembers() {
   const { members } = useDataStore()
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive' | 'dormant'>('all')
+  const [showAddModal, setShowAddModal] = useState(false)
 
   // Add last login data to members
   const membersWithStatus = members.map(member => {
@@ -114,6 +117,14 @@ export default function GroupMembers() {
         <div>
           <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Group Members</h1>
           <p className="text-gray-500 mt-1">Monitor member activity and engagement status</p>
+        </div>
+        <div>
+          <button
+            className="btn btn-primary flex items-center gap-2"
+            onClick={() => setShowAddModal(true)}
+          >
+            Add Member
+          </button>
         </div>
       </div>
 
@@ -345,6 +356,10 @@ export default function GroupMembers() {
           </div>
         </div>
       </div>
-    </div>
+    {/* Add Member Modal */}
+    {showAddModal && (
+      <AddMemberModal onClose={() => setShowAddModal(false)} />
+    )}
+  </div>
   )
 }
