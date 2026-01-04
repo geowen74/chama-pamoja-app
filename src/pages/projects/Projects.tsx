@@ -40,7 +40,7 @@ const statusLabels = {
 }
 
 export default function Projects() {
-  const { projects, loans } = useDataStore()
+  const { projects } = useDataStore()
   const canAddProjects = usePermission('add_projects')
   const [searchQuery] = useState('')
   const [statusFilter] = useState<string>('all')
