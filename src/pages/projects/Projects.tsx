@@ -165,4 +165,9 @@ export default function Projects() {
       )}
     </div>
   )
-}
+}// ...existing code...
+  // Calculate loans per project
+  const getProjectLoans = (projectId: string) => loans.filter(loan => loan.projectId === projectId)
+  // Remove this line:
+  // const getProjectBorrowedAmount = (projectId: string) => getProjectLoans(projectId).reduce((sum, loan) => sum + loan.principalAmount, 0)
+// ...existing code...
