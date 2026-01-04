@@ -8,7 +8,62 @@ export default function Projects() {
 export interface Project {
   // ...existing fields...
   dailyIncome?: { date: string; amount?: number; mileage?: number; fuel?: number }[]
-}
+}import { Link } from 'react-router-dom'
+// ...existing imports...
+
+// ...inside your grid rendering...
+{filteredProjects.map((project) => {
+  const CategoryIcon = categoryIco  import ProjectDetails from './pages/projects/ProjectDetails'
+  // ...inside your dashboard routes...
+  <Route path="/projects/:id" element={<ProjectDetails />} />ns[project.category]
+  const progress = project.expectedIncome > 0 
+    ? (project.actualIncome / project.expectedIncome) * 100 
+    : 0
+  const projectBorrowed = getProjectBorrowedAmount(project.id)
+  const projectLoansCount = getProjectLoans(project.id).length
+
+  // Only active projects are clickable
+  const cardContent = (
+    <>
+      <div className="flex items-start justify-between mb-4">
+        <div className={`p-3 rounded-xl ${categoryColors[project.category]}`}>
+          <CategoryIcon size={24} />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[project.status]}`}>
+            {statusLabels[project.status]}
+          </span>
+          <button className="p-1 hover:bg-gray-100 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+            <MoreHorizontal size={18} className="text-gray-400" />
+          </button>
+        </div>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-primary-600 transition-colors">
+        {project.name}
+      </h3>
+      <p className="text-sm text-gray-500 mb-4 line-clamp-2">{project.description}</p>
+      {/* ...rest of card content... */}
+    </>
+  )
+
+  return project.status === 'active' ? (
+    <Link
+      key={project.id}
+      to={`/projects/${project.id}`}
+      className="card hover:shadow-xl hover:shadow-primary-100/50 transition-all duration-300 group"
+    >
+      {cardContent}
+    </Link>
+  ) : (
+    <div
+      key={project.id}
+      className="card group"
+      style={{ opacity: 0.7, cursor: 'not-allowed' }}
+    >
+      {cardContent}
+    </div>
+  )
+})}
   const startEdit = (project: any) => {
     setEditingId(project.id)
     setEditData({ ...project })
