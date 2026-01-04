@@ -170,4 +170,41 @@ export default function Projects() {
   const getProjectLoans = (projectId: string) => loans.filter(loan => loan.projectId === projectId)
   // Remove this line:
   // const getProjectBorrowedAmount = (projectId: string) => getProjectLoans(projectId).reduce((sum, loan) => sum + loan.principalAmount, 0)
-// ...existing code...
+// ...existing code...// ...existing imports...
+import ProjectDetails from './pages/projects/ProjectDetails'
+
+// ...inside your routes...
+<Route path="/projects/:id" element={<ProjectDetails />} />// filepath: src/pages/projects/ProjectDetails.tsx
+import { useParams, useNavigate } from 'react-router-dom'
+import { useDataStore } from '../../store/dataStore'
+import { useState } from 'react'
+
+export default function ProjectDetails() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { projects, updateProject } = useDataStore()
+  const project = projects.find(p => p.id === id)
+  const [editData, setEditData] = useState(project ? { ...project } : {})
+
+  if (!project) return <div>Project not found</div>
+
+  const handleEditChange = (e) => {
+    setEditData({ ...editData, [e.target.name]: e.target.value })
+  }
+
+  const saveEdit = () => {
+    updateProject(project.id, editData)
+    alert('Project updated!')
+  }
+
+  return (
+    <div>
+      <button onClick={() => navigate(-1)}>Back</button>
+      <h2>Edit Project</h2>
+      <input name="name" value={editData.name} onChange={handleEditChange} />
+      <input name="description" value={editData.description} onChange={handleEditChange} />
+      {/* Add more fields as needed */}
+      <button onClick={saveEdit}>Save Changes</button>
+    </div>
+  )
+}
