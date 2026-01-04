@@ -5,7 +5,10 @@ export default function Projects() {
   const { projects, updateProject } = useDataStore()
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editData, setEditData] = useState<any>({})
-
+export interface Project {
+  // ...existing fields...
+  dailyIncome?: { date: string; amount?: number; mileage?: number; fuel?: number }[]
+}
   const startEdit = (project: any) => {
     setEditingId(project.id)
     setEditData({ ...project })
@@ -108,7 +111,148 @@ export default function Projects() {
       ))}
     </div>
   )
-}import { useState } from 'react'
+}import { useParams, useNavigate } from 'react-router-dom'
+import { useDataStore } from '../../store/dataStore'
+import { useState } from 'react'
+
+export default function ProjectDetails() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { projects, updateProject } = useDataStore()
+  const project = projects.find(p => p.id === id)
+
+  const [editData, setEditData] = useState(project ? { ...project } : {})
+  const [dailyIncome, setDailyIncome] = useState('')
+  const [mileage, setMileage] = useState('')
+  const [fuel, setFuel] = useState('')
+
+  if (!project) return <div>Project not found</div>
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditData({ ...editData, [e.target.name]: e.target.value })
+  }
+
+  const saveEdit = () => {
+    updateProject(project.id, editData)
+    alert('Project updated!')
+  }
+
+  const addDailyRecord = () => {
+    const today = new Date().toISOString().slice(0, 10)
+    const newDaily = {
+      date: today,
+      amount: Number(dailyIncome),
+      mileage: Number(mileage),
+      fuel: Number(fuel)
+    }
+    // Merge with existing dailyIncome array
+    updateProject(project.id, {
+      dailyIncome: [
+        ...(project.dailyIncome || []),
+        newDaily
+      ]
+    })
+    setDailyIncome('')
+    setMileage('')
+    setFuel('')
+  }
+
+  return (
+    <div className="max-w-xl mx-auto p-4 space-y-6">
+      <button className="btn btn-secondary mb-4" onClick={() => navigate(-1)}>Back</button>
+      <h2 className="text-2xl font-bold mb-2">Edit Project</h2>
+      <div className="space-y-2">
+        <input
+          name="name"
+          value={editData.name}
+          onChange={handleEditChange}
+          placeholder="Project Name"
+          className="input w-full"
+        />
+        <input
+          name="description"
+          value={editData.description}
+          onChange={handleEditChange}
+          placeholder="Description"
+          className="input w-full"
+        />
+        {/* Add more fields as needed */}
+        <button className="btn btn-primary" onClick={saveEdit}>Save Changes</button>
+      </div>
+
+      <div className="mt-6">
+        <h3 className="font-semibold mb-2">Add Daily Record</h3>
+        <div className="flex flex-col gap-2">
+          <input
+            type="number"
+            value={dailyIncome}
+            onChange={e => setDailyIncome(e.target.value)}
+            placeholder="Daily Income"
+            className="input"
+          />
+          <input
+            type="number"
+            value={mileage}
+            onChange={e => setMileage(e.target.value)}
+            placeholder="Mileage Covered (km)"
+            className="input"
+          />
+          <input
+            type="number"
+            value={fuel}
+            onChange={e => setFuel(e.target.value)}
+            placeholder="Fuel Consumed (litres)"
+            className="input"
+          />
+          <button className="btn btn-success" onClick={addDailyRecord}>Add Record</button>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <h3 className="font-semibold mb-2">Daily Records</h3>
+        <ul>
+          {(project.dailyIncome || []).map((rec: any, idx: number) => (
+            <li key={idx} className="border-b py-2">
+              {rec.date}: Income: {rec.amount ?? '-'} | Mileage: {rec.mileage ?? '-'} | Fuel: {rec.fuel ?? '-'}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}import ProjectDetails from './pages/projects/ProjectDetails'
+// ...existing code...
+<Route path="/projects/:id" element={<ProjectDetails />} /><Link
+  key={project.id}
+  to={`/projects/${project.id}`}
+  className="card ... group"
+>
+  ...
+</Link>{project.status === 'active' ? (
+  <Link
+    key={project.id}
+    to={`/projects/${project.id}`}
+    className="card ... group"
+  >
+    {/* ...card content... */}
+  </Link>
+) : (
+  <div key={project.id} className="card ... group">
+    {/* ...card content... */}
+  </div>
+)}{project.status === 'active' ? (
+  <Link
+    key={project.id}
+    to={`/projects/${project.id}`}
+    className="card ... group"
+  >
+    {/* ...card content... */}
+  </Link>
+) : (
+  <div key={project.id} className="card ... group">
+    {/* ...card content... */}
+  </div>
+)}import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
