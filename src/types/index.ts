@@ -13,8 +13,8 @@ export interface Project {
   id: string
   name: string
   // ...other fields...
-  loanAmount: number
-  dailyIncome: { date: string; amount: number }[]
+  loanAmount?: number
+  dailyIncome?: { date: string; amount: number }[]
 }
 
 // Next of Kin Types
