@@ -28,3 +28,11 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
+
+    routes:
+  - type: rewrite
+    source: /.*    # This matches all routes
+    destination: /index.html
+
+
+
