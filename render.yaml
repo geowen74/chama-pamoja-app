@@ -9,25 +9,8 @@
         value: 20
     routes:
       - type: rewrite
-        source: /*
+        source: /.*    # This matches all routes
         destination: /index.html
-
-cd "c:\Users\kisina\Desktop\Chama Pamoja app"
-
-@"
-services:
-  - type: web
-    name: chama-pamoja-app
-    env: static
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
-    envVars:
-      - key: NODE_VERSION
-        value: 20
-    routes:
-  - type: rewrite
-    source: /.*    # This matches all routes
-    destination: /index.html
 
 
 
