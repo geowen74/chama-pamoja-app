@@ -129,9 +129,24 @@ export const useDataStore = create<DataState>()(
       fines: initialFines,
 
   // Member actions
-  addMember: (member) => set((state) => ({
-    members: [...state.members, { ...member, id: Date.now().toString() }],
-  })),
+  addMember: (member) => set((state) => {
+    // Generate unique 4-digit idNumber
+    let newId;
+    const usedIds = new Set(state.members.map(m => m.idNumber).filter(Boolean));
+    do {
+      newId = Math.floor(1000 + Math.random() * 9000).toString();
+    } while (usedIds.has(newId));
+    return {
+      members: [
+        ...state.members,
+        {
+          ...member,
+          id: Date.now().toString(),
+          idNumber: newId,
+        },
+      ],
+    };
+  }),
   
   updateMember: (id, data) => set((state) => ({
     members: state.members.map((m) => m.id === id ? { ...m, ...data } : m),
@@ -233,25 +248,48 @@ export const useDataStore = create<DataState>()(
     projects: state.projects.map((p) => p.id === id ? { ...p, ...data } : p),
   })),
 
+  // Add project income (daily, with depositor and method)
+  addProjectIncome: ({ projectId, projectName, depositor, amount, date, method, reference }: {
+    projectId: string,
+    projectName: string,
+    depositor: string,
+    amount: number,
+    date: string,
+    method: 'cash' | 'mobile_transfer' | 'bank_transfer',
+    reference?: string
+  }) => set((state) => ({
+    projects: state.projects.map((p) =>
+      p.id === projectId
+        ? {
+            ...p,
+            dailyIncome: [
+              ...(p.dailyIncome || []),
+              { date, amount, depositor, method, reference }
+            ]
+          }
+        : p
+    ),
+  })),
+
   // ...existing code...
-updateProjectLoanAmount: (projectId: string, amount: number) => set(state => ({
-  projects: state.projects.map(p =>
-    p.id === projectId ? { ...p, loanAmount: amount } : p
-  )
-})),
-addProjectDailyIncome: (projectId: string, date: string, amount: number) => set(state => ({
-  projects: state.projects.map(p =>
-    p.id === projectId
-      ? {
-          ...p,
-          dailyIncome: [
-            ...(p.dailyIncome || []),
-            { date, amount }
-          ]
-        }
-      : p
-  )
-})),
+  updateProjectLoanAmount: (projectId: string, amount: number) => set(state => ({
+    projects: state.projects.map(p =>
+      p.id === projectId ? { ...p, loanAmount: amount } : p
+    )
+  })),
+  addProjectDailyIncome: (projectId: string, date: string, amount: number) => set(state => ({
+    projects: state.projects.map(p =>
+      p.id === projectId
+        ? {
+            ...p,
+            dailyIncome: [
+              ...(p.dailyIncome || []),
+              { date, amount }
+            ]
+          }
+        : p
+    )
+  })),
 // ...existing code...
   
   deleteProject: (id) => set((state) => ({
