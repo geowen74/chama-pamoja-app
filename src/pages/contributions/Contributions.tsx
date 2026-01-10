@@ -93,13 +93,22 @@ export default function Contributions() {
             Export
           </button>
           {canAddContributions && (
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="btn btn-primary flex items-center gap-2"
-            >
-              <Plus size={18} />
-              Record Contribution
-            </button>
+            <>
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="btn btn-primary flex items-center gap-2"
+              >
+                <Plus size={18} />
+                Record Contribution
+              </button>
+              <button
+                className="btn btn-accent flex items-center gap-2"
+                // TODO: Implement handler for project income modal
+              >
+                <Plus size={18} />
+                Record Project Income
+              </button>
+            </>
           )}
         </div>
       </div>
