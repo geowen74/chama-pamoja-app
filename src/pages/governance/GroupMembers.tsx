@@ -218,6 +218,7 @@ export default function GroupMembers() {
             <thead className="bg-gradient-to-r from-violet-50 to-purple-50 border-b border-gray-100">
               <tr>
                 <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Member</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">ID Number</th>
                 <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Role</th>
                 <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Contact</th>
                 <th className="text-left py-4 px-6 text-sm font-semibold text-gray-700">Status</th>
@@ -253,6 +254,9 @@ export default function GroupMembers() {
                         </div>
                       </div>
                     </div>
+                  </td>
+                  <td className="py-4 px-6 font-mono text-base text-gray-700">
+                    {member.idNumber || '--'}
                   </td>
                   <td className="py-4 px-6">
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-violet-100 text-violet-700 capitalize">
