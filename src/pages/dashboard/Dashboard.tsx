@@ -129,6 +129,12 @@ export default function Dashboard() {
               <Link to="/contributions" className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg text-sm font-semibold hover:bg-white/30 transition-all duration-300 border border-white/20">
                 Record Contribution
               </Link>
+              <button
+                className="px-4 py-2 bg-white text-accent-600 rounded-lg text-sm font-semibold hover:bg-white/90 transition-all duration-300 shadow-md"
+                // TODO: Implement handler for project income modal
+              >
+                Record Project Income
+              </button>
               <Link to="/loans/apply" className="px-4 py-2 bg-white text-purple-600 rounded-lg text-sm font-semibold hover:bg-white/90 transition-all duration-300 shadow-md">
                 Apply for Loan
               </Link>
