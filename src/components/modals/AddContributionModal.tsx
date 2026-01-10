@@ -23,8 +23,7 @@ export default function AddContributionModal({ onClose }: AddContributionModalPr
     date: new Date().toISOString().split('T')[0],
     method: 'mpesa' as const,
     reference: '',
-    projectSource: '',
-    depositorName: '',
+    monthlyType: '', // 'deposit' or 'penalty_fine'
   })
 
   const selectedMember = members.find(m => m.id === formData.memberId)
@@ -196,24 +195,17 @@ export default function AddContributionModal({ onClose }: AddContributionModalPr
             </div>
           </div>
           <div>
-            <label className="label text-xs">Daily Income / Project Source</label>
-            <input
-              type="text"
-              value={formData.projectSource}
-              onChange={(e) => setFormData({ ...formData, projectSource: e.target.value })}
+            <label className="label text-xs">Monthly Deposit or Penalty/Fine</label>
+            <select
+              value={formData.monthlyType}
+              onChange={(e) => setFormData({ ...formData, monthlyType: e.target.value })}
               className="input py-2 text-sm"
-              placeholder="e.g., Rental Income, Shop Sales"
-            />
-          </div>
-          <div>
-            <label className="label text-xs">Depositor Name</label>
-            <input
-              type="text"
-              value={formData.depositorName}
-              onChange={(e) => setFormData({ ...formData, depositorName: e.target.value })}
-              className="input py-2 text-sm"
-              placeholder="Name of person depositing"
-            />
+              required
+            >
+              <option value="">Select type</option>
+              <option value="deposit">Monthly Deposit</option>
+              <option value="penalty_fine">Penalty/Fine</option>
+            </select>
           </div>
 
           <div className="flex gap-3 pt-2 sticky bottom-0 bg-white pb-2">
