@@ -8,7 +8,7 @@
         value: 20
     routes:
       - type: rewrite
-        source: /.*    # This matches all routes
+        source: /*
         destination: /index.html
 
 
