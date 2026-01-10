@@ -116,7 +116,12 @@ export default function Projects() {
                   {project.name}
                 </h3>
                 <p className="text-sm text-gray-500 mb-4 line-clamp-2">{project.description}</p>
-                {/* ...rest of card content... */}
+                <button
+                  className="btn btn-accent w-full mt-2"
+                  // TODO: Implement handler for project income modal
+                >
+                  Record Project Income
+                </button>
               </>
             )
 
