@@ -1,62 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDataStore } from '../../store/dataStore';
 import { useAuthStore } from '../../store/authStore';
-import { FaArrowLeft } from 'react-icons/fa';
-import { GlobalWorkerOptions } from 'pdfjs-dist';
-// @ts-ignore
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker?worker';
-GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
-export default function ContributionDetails() {
+export default function Contributions() {
   const { user } = useAuthStore();
   const { members, contributions } = useDataStore();
   const isMember = members?.some(m => m.userId === user?.id);
-  const [uploadResult, setUploadResult] = useState<string | null>(null);
-
-  // Analyze PDF and categorize using pdfjs-dist
-  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    try {
-      const arrayBuffer = await file.arrayBuffer();
-      // Load PDF using pdfjs-dist
-      const pdfjsLib = await import('pdfjs-dist');
-      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-      const pdf = await loadingTask.promise;
-      let text = '';
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const content = await page.getTextContent();
-        text += content.items.map((item: any) => item.str).join(' ');
-      }
-      text = text.toLowerCase();
-      let detected = 'Unknown';
-      if (text.includes('deposit')) detected = 'Deposit';
-      else if (text.includes('withdrawal')) detected = 'Withdrawal';
-      else if (text.includes('expense')) detected = 'Expense';
-      else if (text.includes('income')) detected = 'Income';
-      setUploadResult(`Detected: ${detected}`);
-    } catch (err) {
-      setUploadResult('Could not analyze PDF.');
-    }
-  };
-
-  // Sample data for non-members
-  const sampleContribution = {
-    id: 'sample',
-    memberName: 'Sample Member',
-    contributionTypeName: 'Monthly Contribution',
-    amount: 1000,
-    date: new Date().toISOString(),
-    method: 'cash',
-    reference: 'N/A',
-    status: 'confirmed',
-    confirmedBy: 'Admin',
-  };
-
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
 
   if (!isMember) {
     return (
@@ -64,124 +13,48 @@ export default function ContributionDetails() {
         <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded mb-4 text-center font-semibold">
           You are viewing sample data. Join the group to see real contributions.
         </div>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate('/contributions')}
-            className="p-2 hover:bg-gray-100 rounded-lg"
-          >
-            <FaArrowLeft size={20} />
-          </button>
-          <h1 className="text-2xl font-bold text-gray-900">Contribution Details</h1>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Upload Bank Slip (PDF):</label>
-          <input type="file" accept="application/pdf" onChange={handlePdfUpload} />
-          {uploadResult && <div className="mt-2 text-green-700">{uploadResult}</div>}
-        </div>
-        <div className="card">
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <div className="text-sm text-gray-500">Member</div>
-              <div className="text-lg font-semibold text-gray-900">{sampleContribution.memberName}</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Type</div>
-              <div className="text-lg font-semibold text-gray-900">{sampleContribution.contributionTypeName}</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Amount</div>
-              <div className="text-lg font-semibold text-gray-900">KES {sampleContribution.amount.toLocaleString()}</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Date</div>
-              <div className="text-lg font-semibold text-gray-900">{new Date(sampleContribution.date).toLocaleDateString()}</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Method</div>
-              <div className="text-lg font-semibold text-gray-900">{sampleContribution.method.replace('_', ' ')}</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Reference</div>
-              <div className="text-lg font-semibold text-gray-900">{sampleContribution.reference}</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Status</div>
-              <div className="text-lg font-semibold text-gray-900 capitalize">{sampleContribution.status}</div>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500">Confirmed By</div>
-              <div className="text-lg font-semibold text-gray-900">{sampleContribution.confirmedBy}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const contribution = contributions.find((c) => c.id === id);
-
-  if (!contribution) {
-    return (
-      <div className="text-center py-12">
-        <h2 className="text-xl font-semibold text-gray-900">Contribution not found</h2>
-        <button onClick={() => navigate('/contributions')} className="btn btn-primary mt-4">
-          Back to Contributions
-        </button>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <button
-          onClick={() => navigate('/contributions')}
-          className="p-2 hover:bg-gray-100 rounded-lg"
-        >
-          <FaArrowLeft size={20} />
-        </button>
-        <h1 className="text-2xl font-bold text-gray-900">Contribution Details</h1>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-900">Contributions</h1>
       <div className="card">
-        <div className="grid grid-cols-2 gap-6">
-          <div>
-            <div className="text-sm text-gray-500">Member</div>
-            <div className="text-lg font-semibold text-gray-900">{contribution.memberName}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-500">Type</div>
-            <div className="text-lg font-semibold text-gray-900">{contribution.contributionTypeName}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-500">Amount</div>
-            <div className="text-lg font-semibold text-gray-900">KES {contribution.amount.toLocaleString()}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-500">Date</div>
-            <div className="text-lg font-semibold text-gray-900">{new Date(contribution.date).toLocaleDateString()}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-500">Method</div>
-            <div className="text-lg font-semibold text-gray-900">{contribution.method.replace('_', ' ')}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-500">Reference</div>
-            <div className="text-lg font-semibold text-gray-900">{contribution.reference}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-500">Status</div>
-            <div className="text-lg font-semibold text-gray-900 capitalize">{contribution.status}</div>
-          </div>
-          <div>
-            <div className="text-sm text-gray-500">Confirmed By</div>
-            <div className="text-lg font-semibold text-gray-900">{contribution.confirmedBy}</div>
-          </div>
-        </div>
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 text-left">Member</th>
+              <th className="px-4 py-2 text-left">Type</th>
+              <th className="px-4 py-2 text-left">Amount</th>
+              <th className="px-4 py-2 text-left">Date</th>
+              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contributions.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center py-4 text-gray-500">No contributions found.</td>
+              </tr>
+            ) : (
+              contributions.map((c) => (
+                <tr key={c.id} className="border-b">
+                  <td className="px-4 py-2">{c.memberName}</td>
+                  <td className="px-4 py-2">{c.contributionTypeName}</td>
+                  <td className="px-4 py-2">KES {c.amount.toLocaleString()}</td>
+                  <td className="px-4 py-2">{new Date(c.date).toLocaleDateString()}</td>
+                  <td className="px-4 py-2 capitalize">{c.status}</td>
+                  <td className="px-4 py-2">
+                    <Link to={`/contributions/${c.id}`} className="text-blue-600 hover:underline">View</Link>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
-// export function Contributions() {
-//   return <div>Contributions Component Works!</div>;
-// }
