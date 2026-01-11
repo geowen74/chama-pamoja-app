@@ -134,10 +134,11 @@ export default function Contributions() {
   );
 }
 
-defineConfig({
+export default defineConfig({
   // ...other config...
   build: {
     rollupOptions: {
+      external: ['fsevents'], // Add this line
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
@@ -146,8 +147,6 @@ defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 1000, // Optional: increase warning limit
+    chunkSizeWarningLimit: 1000,
   },
 });
-
-// Removed duplicate Contributions declaration to avoid merged declaration error.
