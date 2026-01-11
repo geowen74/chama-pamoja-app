@@ -18,7 +18,13 @@ import {
 } from 'lucide-react'
 
 export default function Loans() {
-  const { loans, loanTypes } = useDataStore()
+  const { loans, loanTypes, members } = useDataStore()
+  const { user } = require('../../store/authStore').useAuthStore()
+  const isMember = members?.some(m => m.userId === user?.id)
+
+  if (!isMember) {
+    return <div>Access denied. Only group members can view financial information.</div>
+  }
   const [searchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>(searchParams.get('status') || 'all')
