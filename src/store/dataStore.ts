@@ -249,9 +249,8 @@ export const useDataStore = create<DataState>()(
   })),
 
   // Add project income (daily, with depositor and method)
-  addProjectIncome: ({ projectId, projectName, depositor, amount, date, method, reference }: {
+  addProjectIncome: ({ projectId, depositor, amount, date, method, reference }: {
     projectId: string,
-    projectName: string,
     depositor: string,
     amount: number,
     date: string,
