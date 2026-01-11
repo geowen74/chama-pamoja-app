@@ -58,6 +58,6 @@ export default function Contributions() {
   );
 }
 
-// Remove these imports and route definitions from this file.
-// Define your routes in your main App.tsx or routing file instead.
+// Example usage of ContributionDetails in your router (move this to your main router file, not here):
+// <Route path="/contributions/:id" element={<ContributionDetails />} />
 
