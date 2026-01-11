@@ -1,9 +1,12 @@
 import './index.css';
 
-/* Removed Tailwind directives because Tailwind CSS is not configured or not being used. */
-/* If you want to use Tailwind, install it and configure your build tool. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css?family=Inter:400,600&display=swap');
+
+/* ...your custom CSS below... */
 
 * {
   margin: 0;
@@ -472,5 +475,16 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #7c3aed, #c026d3);
+}
+
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
 }
 
