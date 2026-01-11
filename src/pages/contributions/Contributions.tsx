@@ -58,3 +58,6 @@ export default function Contributions() {
   );
 }
 
+// Remove these imports and route definitions from this file.
+// Define your routes in your main App.tsx or routing file instead.
+
