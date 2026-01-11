@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { useDataStore } from '../../store/dataStore'
 import { useAuthStore } from '../../store/authStore'
 import { FaArrowLeft } from 'react-icons/fa'
-import * as pdfParse from 'pdf-parse'
+import * as pdfjsLib from 'pdfjs-dist/build/pdf'
+import 'pdfjs-dist/build/pdf.worker.entry'
 
 export default function ContributionDetails() {
   const { user } = useAuthStore()
@@ -11,14 +12,20 @@ export default function ContributionDetails() {
   const isMember = members?.some(m => m.userId === user?.id)
   const [uploadResult, setUploadResult] = useState<string | null>(null)
 
-  // Analyze PDF and categorize
+  // Analyze PDF and categorize using pdfjs-dist
   const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (!file) return;
     try {
       const arrayBuffer = await file.arrayBuffer();
-      const data = await pdfParse(Buffer.from(arrayBuffer));
-      const text = data.text.toLowerCase();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map((item: any) => item.str).join(' ');
+      }
+      text = text.toLowerCase();
       let detected = 'Unknown';
       if (text.includes('deposit')) detected = 'Deposit';
       else if (text.includes('withdrawal')) detected = 'Withdrawal';
