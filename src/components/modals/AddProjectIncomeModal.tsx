@@ -29,7 +29,6 @@ export default function AddProjectIncomeModal({ onClose }: AddProjectIncomeModal
     }
     addProjectIncome && addProjectIncome({
       projectId: formData.projectId,
-      projectName: selectedProject.name,
       depositor: formData.depositor,
       amount,
       date: formData.date,
