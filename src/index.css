@@ -1,8 +1,7 @@
-import './index.css';
-
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
+*/
 
 @import url('https://fonts.googleapis.com/css?family=Inter:400,600&display=swap');
 
@@ -475,16 +474,5 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #7c3aed, #c026d3);
-}
-
-module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
 }
 
