@@ -46,6 +46,16 @@ export default function Projects() {
   const [statusFilter] = useState<string>('all')
   const [categoryFilter] = useState<string>('all')
   const [showAddModal, setShowAddModal] = useState(false)
+  const [uploadResult, setUploadResult] = useState<string | null>(null)
+
+  // Stub: Analyze PDF and categorize
+  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return;
+    // Placeholder: In real use, parse PDF and analyze text
+    // For now, just show a fake result
+    setUploadResult('Detected: Expense (stub)')
+  }
 
   // Calculate loans per project
   // (removed unused getProjectLoans function)
@@ -88,11 +98,12 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* Summary cards */}
-      {/* ...add summary cards and stats here if needed... */}
-
-      {/* Filters */}
-      {/* ...add filter UI here if needed... */}
+      {/* PDF Upload for Project Analysis */}
+      <div className="mb-4">
+        <label className="block font-medium mb-1">Upload Project PDF (Bank Slip, Expense, Income):</label>
+        <input type="file" accept="application/pdf" onChange={handlePdfUpload} />
+        {uploadResult && <div className="mt-2 text-green-700">{uploadResult}</div>}
+      </div>
 
       {/* Projects grid */}
       {filteredProjects.length > 0 ? (
