@@ -1,11 +1,28 @@
 import { Link } from 'react-router-dom';
 import { useDataStore } from '../../store/dataStore';
 import { useAuthStore } from '../../store/authStore';
-import { defineConfig } from 'vite';
 import { pdfjs } from 'react-pdf';
+import { defineConfig } from 'vite';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+
+export default defineConfig({
+  // ...other config...
+  build: {
+    rollupOptions: {
+      external: ['fsevents'],
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
+});
 
 export default function Contributions() {
   const { user } = useAuthStore();
@@ -133,20 +150,3 @@ export default function Contributions() {
     </div>
   );
 }
-
-export default defineConfig({
-  // ...other config...
-  build: {
-    rollupOptions: {
-      external: ['fsevents'], // Add this line
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-        },
-      },
-    },
-    chunkSizeWarningLimit: 1000,
-  },
-});
