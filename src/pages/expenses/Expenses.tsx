@@ -16,8 +16,13 @@ import {
 import AddExpenseModal from '../../components/modals/AddExpenseModal'
 
 export default function Expenses() {
-  const { expenses, approveExpense } = useDataStore()
   const { user } = useAuthStore()
+  const { members, expenses, approveExpense } = useDataStore()
+  const isMember = members?.some(m => m.userId === user?.id)
+
+  if (!isMember) {
+    return <div>Access denied. Only group members can view financial information.</div>
+  }
   const canAddExpenses = usePermission('add_expenses')
   const canApproveExpenses = usePermission('approve_expenses')
   const [searchQuery, setSearchQuery] = useState('')
