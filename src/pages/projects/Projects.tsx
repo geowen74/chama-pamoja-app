@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { GlobalWorkerOptions } from 'pdfjs-dist';
 import * as pdfjsLib from 'pdfjs-dist';
-// @ts-ignore
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker?worker';
-GlobalWorkerOptions.workerSrc = pdfjsWorker;
+// Remove this line:
+// import pdfjsWorker from 'pdfjs-dist/build/pdf.worker?worker';
+
+// Set workerSrc to a CDN string URL:
+GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
