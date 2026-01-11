@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useDataStore } from '../../store/dataStore';
 import { useAuthStore } from '../../store/authStore';
+import { defineConfig } from 'vite';
 
 
 export default function Contributions() {
   const { user } = useAuthStore();
   const { members, contributions } = useDataStore();
+
+  console.log('user:', user);
+  console.log('members:', members);
+  console.log('contributions:', contributions);
+
   const isMember = members?.some(m => m.userId === user?.id);
 
   // Optionally keep the PDF upload for non-members (demo)
@@ -124,3 +130,21 @@ export default function Contributions() {
     </div>
   );
 }
+
+defineConfig({
+  // ...other config...
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000, // Optional: increase warning limit
+  },
+});
+
+// Removed duplicate Contributions declaration to avoid merged declaration error.
