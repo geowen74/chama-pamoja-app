@@ -9,10 +9,10 @@ import pdfjsWorker from 'pdfjs-dist/build/pdf.worker?worker';
 GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export default function ContributionDetails() {
-  const { user } = useAuthStore()
-  const { members, contributions } = useDataStore()
-  const isMember = members?.some(m => m.userId === user?.id)
-  const [uploadResult, setUploadResult] = useState<string | null>(null)
+  const { user } = useAuthStore();
+  const { members, contributions } = useDataStore();
+  const isMember = members?.some(m => m.userId === user?.id);
+  const [uploadResult, setUploadResult] = useState<string | null>(null);
 
   // Analyze PDF and categorize using pdfjs-dist
   const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ export default function ContributionDetails() {
     } catch (err) {
       setUploadResult('Could not analyze PDF.');
     }
-  }
+  };
 
   // Sample data for non-members
   const sampleContribution = {
@@ -53,10 +53,10 @@ export default function ContributionDetails() {
     reference: 'N/A',
     status: 'confirmed',
     confirmedBy: 'Admin',
-  }
+  };
 
-  const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   if (!isMember) {
     return (
@@ -115,10 +115,10 @@ export default function ContributionDetails() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
-  const contribution = contributions.find((c) => c.id === id)
+  const contribution = contributions.find((c) => c.id === id);
 
   if (!contribution) {
     return (
@@ -128,7 +128,7 @@ export default function ContributionDetails() {
           Back to Contributions
         </button>
       </div>
-    )
+    );
   }
 
   return (
