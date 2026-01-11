@@ -23,7 +23,7 @@ export default function ContributionDetails() {
       // Load PDF using pdfjs-dist
       const pdfjsLib = await import('pdfjs-dist');
       const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-      const pdf = await loadingTask.promise;
+   const pdf = await loadingTask.promise;
       let text = '';
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
