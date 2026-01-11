@@ -15,7 +15,13 @@ import {
 } from 'lucide-react'
 
 export default function Reconciliation() {
-  const { contributions, loans, expenses, fines } = useDataStore()
+  const { contributions, loans, expenses, fines, members } = useDataStore()
+  const { user } = require('../../store/authStore').useAuthStore()
+  const isMember = members?.some(m => m.userId === user?.id)
+
+  if (!isMember) {
+    return <div>Access denied. Only group members can view financial information.</div>
+  }
   const [dateRange, setDateRange] = useState('all')
   const [showBreakdown, setShowBreakdown] = useState(false)
 
