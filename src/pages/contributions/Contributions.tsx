@@ -8,11 +8,75 @@ export default function ContributionDetails() {
   const { members, contributions } = useDataStore()
   const isMember = members?.some(m => m.userId === user?.id)
 
+  // Sample data for non-members
+  const sampleContribution = {
+    id: 'sample',
+    memberName: 'Sample Member',
+    contributionTypeName: 'Monthly Contribution',
+    amount: 1000,
+    date: new Date().toISOString(),
+    method: 'cash',
+    reference: 'N/A',
+    status: 'confirmed',
+    confirmedBy: 'Admin',
+  }
+
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
 
   if (!isMember) {
-    return <div>Access denied. Only group members can view financial information.</div>
+    return (
+      <div className="space-y-6">
+        <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded mb-4 text-center font-semibold">
+          You are viewing sample data. Join the group to see real contributions.
+        </div>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate('/contributions')}
+            className="p-2 hover:bg-gray-100 rounded-lg"
+          >
+            <FaArrowLeft size={20} />
+          </button>
+          <h1 className="text-2xl font-bold text-gray-900">Contribution Details</h1>
+        </div>
+        <div className="card">
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <div className="text-sm text-gray-500">Member</div>
+              <div className="text-lg font-semibold text-gray-900">{sampleContribution.memberName}</div>
+            </div>
+            <div>
+              <div className="text-sm text-gray-500">Type</div>
+              <div className="text-lg font-semibold text-gray-900">{sampleContribution.contributionTypeName}</div>
+            </div>
+            <div>
+              <div className="text-sm text-gray-500">Amount</div>
+              <div className="text-lg font-semibold text-gray-900">KES {sampleContribution.amount.toLocaleString()}</div>
+            </div>
+            <div>
+              <div className="text-sm text-gray-500">Date</div>
+              <div className="text-lg font-semibold text-gray-900">{new Date(sampleContribution.date).toLocaleDateString()}</div>
+            </div>
+            <div>
+              <div className="text-sm text-gray-500">Method</div>
+              <div className="text-lg font-semibold text-gray-900">{sampleContribution.method.replace('_', ' ')}</div>
+            </div>
+            <div>
+              <div className="text-sm text-gray-500">Reference</div>
+              <div className="text-lg font-semibold text-gray-900">{sampleContribution.reference}</div>
+            </div>
+            <div>
+              <div className="text-sm text-gray-500">Status</div>
+              <div className="text-lg font-semibold text-gray-900 capitalize">{sampleContribution.status}</div>
+            </div>
+            <div>
+              <div className="text-sm text-gray-500">Confirmed By</div>
+              <div className="text-lg font-semibold text-gray-900">{sampleContribution.confirmedBy}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   const contribution = contributions.find((c) => c.id === id)
