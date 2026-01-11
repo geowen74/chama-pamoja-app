@@ -107,6 +107,14 @@ interface DataState {
   addProject: (project: Omit<Project, 'id'>) => void
   updateProject: (id: string, data: Partial<Project>) => void
   deleteProject: (id: string) => void
+  addProjectIncome: (data: {
+    projectId: string,
+    depositor: string,
+    amount: number,
+    date: string,
+    method: 'cash' | 'mobile_transfer' | 'bank_transfer',
+    reference?: string
+  }) => void
   
   // Fine actions
   addFine: (fine: Omit<Fine, 'id'>) => void
