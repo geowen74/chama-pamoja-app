@@ -1,4 +1,4 @@
-import Contributions from './pages/contributions/Contributions';
+import Contributions from './Contributions';
 
 export default function App() {
   return (
