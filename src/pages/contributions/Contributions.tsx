@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { useDataStore } from '../../store/dataStore'
 import { useAuthStore } from '../../store/authStore'
 import { FaArrowLeft } from 'react-icons/fa'
-import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
+import { GlobalWorkerOptions } from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist';
 // @ts-ignore
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker?worker';
 GlobalWorkerOptions.workerSrc = pdfjsWorker;
