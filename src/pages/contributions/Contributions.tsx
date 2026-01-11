@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom';
 import { useDataStore } from '../../store/dataStore';
 import { useAuthStore } from '../../store/authStore';
 import { defineConfig } from 'vite';
+import { pdfjs } from 'react-pdf';
 
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 export default function Contributions() {
   const { user } = useAuthStore();
