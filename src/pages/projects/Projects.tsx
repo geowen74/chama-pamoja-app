@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import * as pdfParse from 'pdf-parse'
+import { pdfjs } from 'pdfjs-dist'
+import 'pdfjs-dist/build/pdf.worker.entry'
+const pdfjsLib = pdfjs;
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
@@ -49,14 +51,20 @@ export default function Projects() {
   const [showAddModal, setShowAddModal] = useState(false)
   const [uploadResult, setUploadResult] = useState<string | null>(null)
 
-  // Analyze PDF and categorize
+  // Analyze PDF and categorize using pdfjs-dist
   const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (!file) return;
     try {
       const arrayBuffer = await file.arrayBuffer();
-      const data = await pdfParse(Buffer.from(arrayBuffer));
-      const text = data.text.toLowerCase();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map((item: any) => item.str).join(' ');
+      }
+      text = text.toLowerCase();
       let detected = 'Unknown';
       if (text.includes('deposit')) detected = 'Deposit';
       else if (text.includes('withdrawal')) detected = 'Withdrawal';
