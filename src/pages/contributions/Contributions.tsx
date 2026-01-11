@@ -1,6 +1,5 @@
 
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDataStore } from '../../store/dataStore';
 import { useAuthStore } from '../../store/authStore';
 
@@ -9,12 +8,10 @@ export default function Contributions() {
   const { user } = useAuthStore();
   const { members, contributions } = useDataStore();
   const isMember = members?.some(m => m.userId === user?.id);
-  const [uploadResult, setUploadResult] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   // Optionally keep the PDF upload for non-members (demo)
-  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // ...existing code...
+  const handlePdfUpload = async () => {
+    // No-op: demo only, function intentionally left blank
   };
 
   // Sample data for non-members
@@ -53,7 +50,6 @@ export default function Contributions() {
         <div className="mb-4">
           <label className="block font-medium mb-1">Upload Bank Slip (PDF):</label>
           <input type="file" accept="application/pdf" onChange={handlePdfUpload} />
-          {uploadResult && <div className="mt-2 text-green-700">{uploadResult}</div>}
         </div>
         <div className="card">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Sample Contributions</h1>
