@@ -7,6 +7,16 @@ export default function ContributionDetails() {
   const { user } = useAuthStore()
   const { members, contributions } = useDataStore()
   const isMember = members?.some(m => m.userId === user?.id)
+  const [uploadResult, setUploadResult] = useState<string | null>(null)
+
+  // Stub: Analyze PDF and categorize
+  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return;
+    // Placeholder: In real use, parse PDF and analyze text
+    // For now, just show a fake result
+    setUploadResult('Detected: Deposit (stub)')
+  }
 
   // Sample data for non-members
   const sampleContribution = {
@@ -38,6 +48,11 @@ export default function ContributionDetails() {
             <FaArrowLeft size={20} />
           </button>
           <h1 className="text-2xl font-bold text-gray-900">Contribution Details</h1>
+        </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">Upload Bank Slip (PDF):</label>
+          <input type="file" accept="application/pdf" onChange={handlePdfUpload} />
+          {uploadResult && <div className="mt-2 text-green-700">{uploadResult}</div>}
         </div>
         <div className="card">
           <div className="grid grid-cols-2 gap-6">
