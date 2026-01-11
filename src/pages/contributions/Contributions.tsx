@@ -1,7 +1,4 @@
 import Contributions from './Contributions';
-import { Link } from 'react-router-dom';
-import { useDataStore } from '../../store/dataStore';
-import { useAuthStore } from '../../store/authStore';
 
 export default function App() {
   return (
@@ -9,4 +6,8 @@ export default function App() {
       <Contributions />
     </div>
   );
+}
+
+export function Contributions() {
+  return <div>Contributions Component Works!</div>;
 }
