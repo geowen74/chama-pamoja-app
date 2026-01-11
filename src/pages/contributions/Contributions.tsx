@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useDataStore } from '../../store/dataStore'
 import { useAuthStore } from '../../store/authStore'
 import { FaArrowLeft } from 'react-icons/fa'
-import pdfParse from 'pdf-parse'
+import * as pdfParse from 'pdf-parse'
 
 export default function ContributionDetails() {
   const { user } = useAuthStore()
