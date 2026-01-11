@@ -1,6 +1,8 @@
 /* Removed Tailwind directives because Tailwind CSS is not configured or not being used. */
 /* If you want to use Tailwind, install it and configure your build tool. */
 
+@import url('https://fonts.googleapis.com/css?family=Inter:400,600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -11,6 +13,14 @@ body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 25%, #fdf4ff 50%, #fff7ed 75%, #fefce8 100%);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root, .app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Animated background gradient */
@@ -205,14 +215,6 @@ body {
   padding-bottom: 0.875rem;
   border: 1px solid rgba(229, 231, 235, 0.6); /* border-gray-200/60 */
   border-radius: 0.75rem; /* rounded-xl */
-  outline: none;
-  background-color: rgba(255,255,255,0.8); /* bg-white/80 */
-  -webkit-backdrop-filter: blur(4px); /* backdrop-blur-sm */
-  backdrop-filter: blur(4px);
-  transition: all 0.3s;
-  color: #374151;
-}
-.input:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5); /* focus:ring-purple-500/50 */
   border-color: #a78bfa; /* focus:border-purple-400 */
