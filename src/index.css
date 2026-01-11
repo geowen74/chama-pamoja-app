@@ -1,3 +1,5 @@
+import './index.css';
+
 /* Removed Tailwind directives because Tailwind CSS is not configured or not being used. */
 /* If you want to use Tailwind, install it and configure your build tool. */
 
