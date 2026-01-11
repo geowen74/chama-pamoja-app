@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import pdfParse from 'pdf-parse'
+import * as pdfParse from 'pdf-parse'
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
