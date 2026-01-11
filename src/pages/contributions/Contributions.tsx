@@ -20,7 +20,7 @@ export default function ContributionDetails() {
     if (!file) return;
     try {
       const arrayBuffer = await file.arrayBuffer();
-      const pdf = await getDocument({ data: arrayBuffer }).promise;
+      // Removed pdfjsLib reference for clarity and correctness
       let text = '';
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
