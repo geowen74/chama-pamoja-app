@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { pdfjs } from 'pdfjs-dist'
-import 'pdfjs-dist/build/pdf.worker.entry'
-const pdfjsLib = pdfjs;
+import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
+// @ts-ignore
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker?worker';
+GlobalWorkerOptions.workerSrc = pdfjsWorker;
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
