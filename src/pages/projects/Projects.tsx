@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import pdfParse from 'pdf-parse'
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
 import { usePermission } from '../../utils/permissions'
@@ -48,13 +49,23 @@ export default function Projects() {
   const [showAddModal, setShowAddModal] = useState(false)
   const [uploadResult, setUploadResult] = useState<string | null>(null)
 
-  // Stub: Analyze PDF and categorize
+  // Analyze PDF and categorize
   const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return;
-    // Placeholder: In real use, parse PDF and analyze text
-    // For now, just show a fake result
-    setUploadResult('Detected: Expense (stub)')
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const data = await pdfParse(Buffer.from(arrayBuffer));
+      const text = data.text.toLowerCase();
+      let detected = 'Unknown';
+      if (text.includes('deposit')) detected = 'Deposit';
+      else if (text.includes('withdrawal')) detected = 'Withdrawal';
+      else if (text.includes('expense')) detected = 'Expense';
+      else if (text.includes('income')) detected = 'Income';
+      setUploadResult(`Detected: ${detected}`);
+    } catch (err) {
+      setUploadResult('Could not analyze PDF.');
+    }
   }
 
   // Calculate loans per project
