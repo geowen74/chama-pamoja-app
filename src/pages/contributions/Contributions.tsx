@@ -1,7 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useDataStore } from '../../store/dataStore'
 import { useAuthStore } from '../../store/authStore'
 import { FaArrowLeft } from 'react-icons/fa'
+import pdfParse from 'pdf-parse'
 
 export default function ContributionDetails() {
   const { user } = useAuthStore()
@@ -9,13 +11,23 @@ export default function ContributionDetails() {
   const isMember = members?.some(m => m.userId === user?.id)
   const [uploadResult, setUploadResult] = useState<string | null>(null)
 
-  // Stub: Analyze PDF and categorize
+  // Analyze PDF and categorize
   const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return;
-    // Placeholder: In real use, parse PDF and analyze text
-    // For now, just show a fake result
-    setUploadResult('Detected: Deposit (stub)')
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const data = await pdfParse(Buffer.from(arrayBuffer));
+      const text = data.text.toLowerCase();
+      let detected = 'Unknown';
+      if (text.includes('deposit')) detected = 'Deposit';
+      else if (text.includes('withdrawal')) detected = 'Withdrawal';
+      else if (text.includes('expense')) detected = 'Expense';
+      else if (text.includes('income')) detected = 'Income';
+      setUploadResult(`Detected: ${detected}`);
+    } catch (err) {
+      setUploadResult('Could not analyze PDF.');
+    }
   }
 
   // Sample data for non-members
