@@ -600,16 +600,5 @@ body {
   background: linear-gradient(180deg, #7c3aed, #c026d3);
 }
 
-<div className="background-overlay"></div>
-<div className="login-card">
-  <img src="/logo.png" alt="App Logo" className="login-logo" />
-  <div className="login-title">Chama Pamoja</div>
-  <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: '#555' }}>
-    Manage Your Group Finances Effortlessly
-  </div>
-  <input className="input" type="text" placeholder="Username" />
-  <input className="input" type="password" placeholder="Password" />
-  <button className="btn-primary">Login</button>
-  <a href="#" className="forgot-link">Forgot password?</a>
-</div>
+/* Example markup removed from CSS file. Place this HTML/JSX in your component file instead. */
 
