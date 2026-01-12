@@ -3,9 +3,126 @@
 @tailwind utilities;
 */
 
+
 @import url('https://fonts.googleapis.com/css?family=Inter:400,600&display=swap');
 
+body {
+  /* Soft, professional background gradient */
+  background: linear-gradient(120deg, #f3e8ff 0%, #e0e7ff 50%, #f1f5f9 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+}
+
+/* Optional: overlay for depth */
+.background-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.3);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glassy login card */
+.login-card {
+  background: rgba(255,255,255,0.7);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 380px;
+  width: 100%;
+  margin: 2rem auto;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bounce-in 0.7s;
+}
+
+.login-logo {
+  width: 70px;
+  margin-bottom: 1.5rem;
+}
+
+.login-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #7c3aed;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+/* Premium input fields */
+.login-card .input {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid #e0e7ff;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  color: #374151;
+  box-shadow: 0 2px 8px 0 rgba(124, 58, 237, 0.04);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.login-card .input:focus {
+  border: 1.5px solid #a78bfa;
+  box-shadow: 0 0 0 2px #a78bfa33;
+}
+
+/* Premium button */
+.login-card .btn-primary {
+  width: 100%;
+  padding: 0.9rem 0;
+  font-size: 1.1rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(90deg, #7c3aed 0%, #8b5cf6 100%);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 16px 0 rgba(124, 58, 237, 0.12);
+  border: none;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.login-card .btn-primary:hover {
+  background: linear-gradient(90deg, #6d28d9 0%, #a21caf 100%);
+  box-shadow: 0 8px 24px 0 rgba(124, 58, 237, 0.18);
+}
+
+.login-card .forgot-link {
+  color: #7c3aed;
+  font-size: 0.95rem;
+  text-align: right;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: color 0.2s;
+}
+.login-card .forgot-link:hover {
+  color: #a21caf;
+  text-decoration: underline;
+}
+
 /* ...your custom CSS below... */
+
+/* Example usage in your login page (JSX/HTML):
+<div class="background-overlay"></div>
+<div class="login-card">
+  <img src="/logo.png" alt="Logo" class="login-logo" />
+  <div class="login-title">Sign in to Your Account</div>
+  <input class="input" type="text" placeholder="Username" />
+  <input class="input" type="password" placeholder="Password" />
+  <button class="btn-primary">Login</button>
+  <a href="#" class="forgot-link">Forgot password?</a>
+</div>
+*/
 
 * {
   margin: 0;
@@ -475,4 +592,14 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #7c3aed, #c026d3);
 }
+
+<div className="background-overlay"></div>
+<div className="login-card">
+  <img src="/logo.png" alt="App Logo" className="login-logo" />
+  <div className="login-title">Sign in to Your Account</div>
+  <input className="input" type="text" placeholder="Username" />
+  <input className="input" type="password" placeholder="Password" />
+  <button className="btn-primary">Login</button>
+  <a href="#" className="forgot-link">Forgot password?</a>
+</div>
 
