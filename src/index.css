@@ -1,6 +1,5 @@
 /* @tailwind base;
-@tailwind components;
-@tailwind utilities;
+@tailwind componentslookind utilities;
 */
 
 
@@ -58,6 +57,14 @@ body {
   margin-bottom: 1.5rem;
   letter-spacing: 0.01em;
   text-align: center;
+}
+
+/* Optional subtitle style */
+.login-card .subtitle {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #555;
+  font-size: 1rem;
 }
 
 /* Premium input fields */
@@ -596,7 +603,10 @@ body {
 <div className="background-overlay"></div>
 <div className="login-card">
   <img src="/logo.png" alt="App Logo" className="login-logo" />
-  <div className="login-title">Sign in to Your Account</div>
+  <div className="login-title">Chama Pamoja</div>
+  <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: '#555' }}>
+    Manage Your Group Finances Effortlessly
+  </div>
   <input className="input" type="text" placeholder="Username" />
   <input className="input" type="password" placeholder="Password" />
   <button className="btn-primary">Login</button>
