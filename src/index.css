@@ -12,6 +12,7 @@ body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 25%, #fdf4ff 50%, #fff7ed 75%, #fefce8 100%);
   min-height: 100vh;
+  /* Optionally add a subtle pattern or image overlay */
 }
 
 /* Animated background gradient */
@@ -53,7 +54,7 @@ body {
 
 @layer components {
   .btn {
-    @apply px-5 py-3 rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0;
+    @apply px-4 py-2 bg-blue-500 text-white;
   }
   
   .btn-primary {
@@ -201,6 +202,11 @@ body {
   
   .hover-glow {
     @apply transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20;
+  }
+  
+  /* Add or update card styles for login */
+  .login-card {
+    @apply bg-white/90 rounded-3xl shadow-2xl p-8 flex flex-col items-center;
   }
 }
 
