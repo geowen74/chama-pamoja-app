@@ -103,21 +103,30 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'view_reports', 'export_reports',
     'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
   ],
-  
   chairman: [
-    'view_members', 'add_members', 'edit_members', 'change_member_roles',
-    'view_contributions', 'add_contributions', 'confirm_contributions',
-    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans',
-    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings',
-    'view_expenses', 'add_expenses', 'approve_expenses',
+    // All permissions
+    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
+    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
+    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
+    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
+    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
     'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
-    'view_fines', 'add_fines', 'waive_fines',
+    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
     'view_reports', 'export_reports',
-    'view_settings', 'edit_settings',
+    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
   ],
-  
   vice_chairman: [
-    'view_members', 'add_members', 'edit_members',
+    // All permissions
+    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
+    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
+    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
+    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
+    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
+    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
+    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
+    'view_reports', 'export_reports',
+    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
+  ],
     'view_contributions',
     'view_loans', 'apply_loan',
     'view_meetings', 'schedule_meetings', 'edit_meetings',
@@ -204,61 +213,66 @@ export const SENSITIVE_ACTIONS: Permission[] = [
   'waive_fines',
   'edit_settings',
   'manage_contribution_types',
-  'manage_loan_types',
-  'manage_fine_types',
-]
-
-// Roles that have edit permissions (legacy)
-export const EDIT_ROLES = ['admin', 'chairman', 'secretary'] as const
-export type EditRole = typeof EDIT_ROLES[number]
-
-/**
- * Check if a role has a specific permission
- */
-export function hasPermission(role: string | undefined, permission: Permission): boolean {
-  if (!role) return false
-  const rolePermissions = ROLE_PERMISSIONS[role as UserRole]
-  if (!rolePermissions) return false
-  return rolePermissions.includes(permission)
-}
-
-/**
- * Check if an action requires PIN verification
- */
-export function requiresPinVerification(permission: Permission): boolean {
-  return SENSITIVE_ACTIONS.includes(permission)
-}
-
-/**
- * Check if a user role has edit permissions (legacy)
- */
-export function canEdit(role: string | undefined): boolean {
-  if (!role) return false
-  return EDIT_ROLES.includes(role as EditRole)
-}
-
-/**
- * Hook to check if the current user has a specific permission
- */
-export function usePermission(permission: Permission): boolean {
-  const { user } = useAuthStore()
-  return hasPermission(user?.role, permission)
-}
-
-/**
- * Hook to check multiple permissions at once
- */
-export function usePermissions(permissions: Permission[]): Record<Permission, boolean> {
-  const { user } = useAuthStore()
-  const result: Partial<Record<Permission, boolean>> = {}
-  
-  for (const permission of permissions) {
-    result[permission] = hasPermission(user?.role, permission)
-  }
-  
-  return result as Record<Permission, boolean>
-}
-
+  treasurer: [
+    // All permissions
+    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
+    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
+    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
+    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
+    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
+    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
+    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
+    'view_reports', 'export_reports',
+    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
+  ],
+  vice_treasurer: [
+    // All permissions
+    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
+    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
+    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
+    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
+    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
+    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
+    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
+    'view_reports', 'export_reports',
+    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
+  ],
+  secretary: [
+    // All permissions
+    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
+    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
+    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
+    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
+    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
+    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
+    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
+    'view_reports', 'export_reports',
+    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
+  ],
+  vice_secretary: [
+    // All permissions
+    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
+    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
+    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
+    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
+    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
+    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
+    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
+    'view_reports', 'export_reports',
+    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
+  ],
+  member: [
+    // All permissions
+    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
+    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
+    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
+    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
+    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
+    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
+    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
+    'view_reports', 'export_reports',
+    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
+  ],
 /**
  * Hook to check if the current user can edit (legacy)
  */
