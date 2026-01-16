@@ -245,7 +245,6 @@ export const SENSITIVE_ACTIONS: Permission[] = [
     'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
   ],
   member: [
-    // All permissions
     'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
     'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
     'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
@@ -255,7 +254,26 @@ export const SENSITIVE_ACTIONS: Permission[] = [
     'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
     'view_reports', 'export_reports',
     'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
-  ],
+  ]
+};
+
+// Sensitive actions that require PIN/password verification
+export const SENSITIVE_ACTIONS: Permission[] = [
+  'approve_loans',
+  'reject_loans',
+  'disburse_loans',
+  'approve_expenses',
+  'delete_members',
+  'change_member_roles',
+  'delete_contributions',
+  'delete_expenses',
+  'delete_projects',
+  'delete_fines',
+  'waive_fines',
+  'edit_settings',
+  'manage_contribution_types',
+];
+
 /**
  * Hook to check if the current user can edit (legacy)
  */
