@@ -27,6 +27,8 @@ import Projects from './pages/projects/Projects'
 import Reports from './pages/reports/Reports'
 import Settings from './pages/settings/Settings'
 import AdminSettings from './pages/admin/AdminSettings'
+import RecordProject from './pages/projects/RecordProject'
+import ProjectIncomeDetails from './pages/projects/ProjectIncomeDetails'
 
 // Governance Pages
 import GroupMembers from './pages/governance/GroupMembers'
@@ -93,8 +95,8 @@ function App() {
             <DashboardLayout />
           </ProtectedRoute>
         }>
-          <Route path="/projects/record" element={<require('./pages/projects/RecordProject').default />} />
-          <Route path="/projects/income" element={<require('./pages/projects/ProjectIncomeDetails').default />} />
+          <Route path="/projects/record" element={<RecordProject />} />
+          <Route path="/projects/income" element={<ProjectIncomeDetails />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/members" element={<Members />} />
           <Route path="/members/:id" element={<MemberDetails />} />
