@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useProjectStore } from '../../store/projectStore';
+import { useDataStore } from '../../store/dataStore';
 
 const RecordProject: React.FC = () => {
-    const { addProject } = useProjectStore();
+  const { addProject } = useDataStore();
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -17,31 +17,27 @@ const RecordProject: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newProject = {
-      id: Date.now().toString(),
-      name: form.name,
-      description: form.description,
-      loanAmount: form.loanAmount ? Number(form.loanAmount) : undefined,
-      startDate: form.startDate,
-      category: '', // Provide a default or get from form
-      status: 'pending', // Example default status
-      totalInvestment: 0,
-      totalBorrowed: 0,
-      members: [],
-      repayments: [],
-      investments: [],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      ownerId: '', // Provide a default or get from context
-      isActive: true,
-      currentValue: 0, // Add default value or calculate as needed
-      expectedIncome: 0, // Add default value or calculate as needed
-      actualIncome: 0, // Add default value or calculate as needed
-      roi: 0, // Add default value or calculate as needed
-      // Add any other required properties here with default values
-    };
-
-    // Try to save to backend
+      const newProject = {
+        name: form.name,
+        description: form.description,
+        category: 'other' as const,
+        status: 'planning' as const,
+        startDate: form.startDate,
+        endDate: '',
+        totalInvestment: 0,
+        totalBorrowed: 0,
+        currentValue: 0,
+        expectedIncome: 0,
+        actualIncome: 0,
+        roi: 0,
+        members: [],
+        milestones: [],
+        transactions: [],
+        createdBy: '',
+        createdAt: new Date().toISOString(),
+        loanAmount: form.loanAmount ? Number(form.loanAmount) : undefined,
+        dailyIncome: [],
+      };
     fetch('/api/projects', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -56,7 +52,8 @@ const RecordProject: React.FC = () => {
       })
       .catch(() => {
         // If backend fails, save to local store
-        addProject(yes);
+          const projectData = newProject; // Omit 'id' when saving to local store
+          addProject(projectData);
         setSubmitted(true);
       });
   };
