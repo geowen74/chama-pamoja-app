@@ -94,6 +94,7 @@ function App() {
           </ProtectedRoute>
         }>
           <Route path="/projects/record" element={<require('./pages/projects/RecordProject').default />} />
+          <Route path="/projects/income" element={<require('./pages/projects/ProjectIncomeDetails').default />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/members" element={<Members />} />
           <Route path="/members/:id" element={<MemberDetails />} />
