@@ -196,6 +196,7 @@ export const SENSITIVE_ACTIONS: Permission[] = [
   'waive_fines',
   'edit_settings',
   'manage_contribution_types',
+],
   treasurer: [
     // All permissions
     'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
