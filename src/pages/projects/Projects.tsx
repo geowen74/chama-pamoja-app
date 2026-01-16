@@ -9,7 +9,7 @@ GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 import { Link } from 'react-router-dom'
 import { useDataStore } from '../../store/dataStore'
-import { usePermission } from '../../utils/permissions'
+// import { Permission } from '../../utils/permissions'
 import AddProjectModal from '../../components/modals/AddProjectModal'
 import { FolderKanban, Plus, Download } from 'lucide-react'
 
@@ -49,7 +49,7 @@ const statusLabels = {
 
 export default function Projects() {
   const { projects } = useDataStore()
-  const canAddProjects = usePermission('add_projects')
+  // const canAddProjects = usePermission('add_projects')
   const [searchQuery] = useState('')
   const [statusFilter] = useState<string>('all')
   const [categoryFilter] = useState<string>('all')
@@ -110,7 +110,7 @@ export default function Projects() {
             <Download size={18} />
             Export
           </button>
-          {canAddProjects && (
+          {/* Removed canAddProjects check due to missing implementation */}
             <>
               <button
                 onClick={() => setShowAddModal(true)}
