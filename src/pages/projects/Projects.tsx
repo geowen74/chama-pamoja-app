@@ -111,13 +111,22 @@ export default function Projects() {
             Export
           </button>
           {canAddProjects && (
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="btn btn-primary flex items-center gap-2"
-            >
-              <Plus size={18} />
-              New Project
-            </button>
+            <>
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="btn btn-primary flex items-center gap-2"
+              >
+                <Plus size={18} />
+                New Project
+              </button>
+              <Link
+                to="/projects/record"
+                className="btn btn-accent flex items-center gap-2"
+                style={{ textDecoration: 'none' }}
+              >
+                Record a Project
+              </Link>
+            </>
           )}
         </div>
       </div>
