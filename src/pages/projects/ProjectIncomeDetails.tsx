@@ -1,23 +1,8 @@
 import React from 'react';
 
 const ProjectIncomeDetails: React.FC = () => {
-  // Example data, replace with real data fetching logic
-  const incomeDetails = [
-    {
-      id: 1,
-      source: 'Grant from NGO',
-      amount: 5000,
-      date: '2026-01-10',
-      description: 'Support for community project',
-    },
-    {
-      id: 2,
-      source: 'Fundraiser Event',
-      amount: 3200,
-      date: '2026-01-12',
-      description: 'Proceeds from annual fundraiser',
-    },
-  ];
+  // TODO: Fetch real project income data here
+  const incomeDetails: any[] = [];
 
   return (
     <div className="card">
