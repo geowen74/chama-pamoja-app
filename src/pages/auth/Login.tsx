@@ -3,23 +3,38 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [group, setGroup] = useState('');
   const { login, isLoading } = useAuthStore();
   const navigate = useNavigate();
+
+  // Example group options; replace with dynamic fetch if needed
+  const groupOptions = [
+    { value: '', label: 'Select a group' },
+    { value: 'group1', label: 'Group 1' },
+    { value: 'group2', label: 'Group 2' },
+    { value: 'group3', label: 'Group 3' },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    if (!group) {
+      setError('Please choose a group');
+      return;
+    }
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
     try {
-      await login(email, password);
+      // Pass group to login if your backend supports it, otherwise ignore
+      await login(email, password /*, group*/);
       navigate('/dashboard');
     } catch {
       setError('Invalid email or password');
@@ -36,6 +51,18 @@ export default function Login() {
           Manage Your Group Finances Effortlessly
         </div>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+          <select
+            className="input"
+            value={group}
+            onChange={e => setGroup(e.target.value)}
+            disabled={isLoading}
+            style={{ marginBottom: '1rem' }}
+            required
+          >
+            {groupOptions.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
           {error && (
             <div className="bg-gradient-to-r from-rose-50 to-pink-50 text-rose-600 px-5 py-4 rounded-2xl text-sm font-medium border border-rose-100/50 flex items-center gap-3 mb-4">
               <span className="text-lg">⚠️</span>
