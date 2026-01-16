@@ -106,7 +106,7 @@ export default function Login() {
           <button
             type="submit"
             className="btn-primary"
-            style={{ width: '100%' }}
+            style={{ width: '100%', borderRadius: '1.5rem' }}
             disabled={isLoading}
           >
             {isLoading ? (
