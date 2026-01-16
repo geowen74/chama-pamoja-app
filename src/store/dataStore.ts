@@ -10,7 +10,7 @@ const initialContributionTypes: ContributionType[] = [
   { id: '1', name: 'Monthly Contribution', description: 'Regular monthly savings', amount: 0, frequency: 'monthly', isRequired: true },
 ]
 
-// Empty initial contributions
+// Empty initial contributions (no sample data)
 const initialContributions: Contribution[] = []
 
 // Default loan types - customize with your group's rates and limits
