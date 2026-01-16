@@ -34,6 +34,11 @@ const RecordProject: React.FC = () => {
       updatedAt: new Date().toISOString(),
       ownerId: '', // Provide a default or get from context
       isActive: true,
+      currentValue: 0, // Add default value or calculate as needed
+      expectedIncome: 0, // Add default value or calculate as needed
+      actualIncome: 0, // Add default value or calculate as needed
+      roi: 0, // Add default value or calculate as needed
+      // Add any other required properties here with default values
     };
 
     // Try to save to backend
@@ -51,7 +56,7 @@ const RecordProject: React.FC = () => {
       })
       .catch(() => {
         // If backend fails, save to local store
-        addProject(newProject);
+        addProject(yes);
         setSubmitted(true);
       });
   };
