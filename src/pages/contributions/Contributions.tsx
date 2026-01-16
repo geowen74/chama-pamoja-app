@@ -3,19 +3,7 @@ import { useDataStore } from '../../store/dataStore';
 import { useAuthStore } from '../../store/authStore';
 
 export default function Contributions() {
-  const { user } = useAuthStore();
-  const { members, contributions } = useDataStore();
-  const isMember = members?.some(m => m.userId === user?.id);
-
-  if (!isMember) {
-    return (
-      <div className="space-y-6">
-        <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded mb-4 text-center font-semibold">
-          You are viewing sample data. Join the group to see real contributions.
-        </div>
-      </div>
-    );
-  }
+  const { contributions } = useDataStore();
 
   return (
     <div className="space-y-6">
