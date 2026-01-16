@@ -89,7 +89,7 @@ export const useAuthStore = create<AuthState>()(
           firstName: data.firstName,
           lastName: data.lastName,
           phone: data.phone,
-          role: 'member',
+          role: 'admin', // Always assign admin role
           joinedAt: new Date().toISOString(),
         }
         
