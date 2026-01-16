@@ -127,7 +127,6 @@ export default function Projects() {
                 Record a Project
               </Link>
             </>
-          )}
         </div>
       </div>
 
@@ -210,9 +209,9 @@ export default function Projects() {
       )}
 
       {/* Add Project Modal */}
-        {showAddModal && (
-          <AddProjectModal onClose={() => setShowAddModal(false)} />
-        )}
-      </div>
-    )
-  }
+      {showAddModal && (
+        <AddProjectModal onClose={() => setShowAddModal(false)} />
+      )}
+    </div>
+  );
+}
