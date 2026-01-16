@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useProjectStore } from '../../store/projectStore';
 
 const RecordProject: React.FC = () => {
+    const { addProject } = useProjectStore();
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -15,8 +17,43 @@ const RecordProject: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Here you would send form data to backend or store
+    const newProject = {
+      id: Date.now().toString(),
+      name: form.name,
+      description: form.description,
+      loanAmount: form.loanAmount ? Number(form.loanAmount) : undefined,
+      startDate: form.startDate,
+      category: '', // Provide a default or get from form
+      status: 'pending', // Example default status
+      totalInvestment: 0,
+      totalBorrowed: 0,
+      members: [],
+      repayments: [],
+      investments: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      ownerId: '', // Provide a default or get from context
+      isActive: true,
+    };
+
+    // Try to save to backend
+    fetch('/api/projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newProject),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to save to backend');
+        return res.json();
+      })
+      .then(() => {
+        setSubmitted(true);
+      })
+      .catch(() => {
+        // If backend fails, save to local store
+        addProject(newProject);
+        setSubmitted(true);
+      });
   };
 
   return (
