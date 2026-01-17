@@ -102,7 +102,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'view_reports', 'export_reports',
     'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
   ],
-  chairman: [
+  member: [
     'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
     'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
     'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
