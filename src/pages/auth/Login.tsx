@@ -106,8 +106,25 @@ export default function Login() {
           <button
             type="submit"
             className="btn-primary"
-            style={{ width: '100%', borderRadius: '1.5rem' }}
+            style={{
+              width: '100%',
+              borderRadius: '1.5rem',
+              background: 'linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%)',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '1.1rem',
+              boxShadow: '0 4px 16px rgba(124, 58, 237, 0.15)',
+              transition: 'background 0.3s, box-shadow 0.3s',
+            }}
             disabled={isLoading}
+            onMouseOver={e => {
+              e.currentTarget.style.background = 'linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%)';
+              e.currentTarget.style.boxShadow = '0 6px 24px rgba(124, 58, 237, 0.25)';
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.background = 'linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(124, 58, 237, 0.15)';
+            }}
           >
             {isLoading ? (
               <>
