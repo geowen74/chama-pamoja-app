@@ -186,6 +186,13 @@ export default function Projects() {
                   >
                     View Details
                   </Link>
+                  <Link
+                    to={`/projects/${project.id}/income`}
+                    className="btn btn-primary"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    Record Income
+                  </Link>
                 </div>
               </div>
             ) : (
