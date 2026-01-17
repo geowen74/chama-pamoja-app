@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuthStore } from '../../store/authStore'
 import { useSecurityStore } from '../../store/securityStore'
 import { useUserRole, ROLE_DESCRIPTIONS } from '../../utils/permissions'
@@ -68,15 +68,57 @@ export default function Settings() {
     { id: 'billing', label: 'Billing', icon: CreditCard },
   ]
 
-  const handleSaveProfile = () => {
-    updateUser(profileData)
-    alert('Profile updated successfully!')
-  }
+  // Load profile info from backend on mount
+  useEffect(() => {
+    fetch('http://localhost:4000/api/user')
+      .then(res => res.json())
+      .then(data => {
+        if (data && Object.keys(data).length > 0) {
+          setProfileData({
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+            email: data.email || '',
+            phone: data.phone || '',
+          });
+          updateUser(data);
+        }
+      });
+    fetch('http://localhost:4000/api/group')
+      .then(res => res.json())
+      .then(data => {
+        if (data && Object.keys(data).length > 0) {
+          setGroupData({
+            name: data.name || '',
+            description: data.description || '',
+            contributionAmount: data.contributionAmount || 0,
+            contributionFrequency: data.contributionFrequency || 'monthly',
+            loanInterestRate: data.loanInterestRate || 0,
+            maxLoanMultiplier: data.maxLoanMultiplier || 0,
+          });
+          updateGroup(data);
+        }
+      });
+  }, []);
 
-  const handleSaveGroup = () => {
-    updateGroup(groupData)
-    alert('Group settings updated successfully!')
-  }
+  const handleSaveProfile = async () => {
+    updateUser(profileData);
+    await fetch('http://localhost:4000/api/user', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profileData),
+    });
+    alert('Profile updated successfully!');
+  };
+
+  const handleSaveGroup = async () => {
+    updateGroup(groupData);
+    await fetch('http://localhost:4000/api/group', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(groupData),
+    });
+    alert('Group settings updated successfully!');
+  };
 
   return (
     <div className="space-y-6">
