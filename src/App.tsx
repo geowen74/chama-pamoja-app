@@ -30,6 +30,7 @@ import AdminSettings from './pages/admin/AdminSettings'
 import RecordProject from './pages/projects/RecordProject'
 import ProjectIncomeDetails from './pages/projects/ProjectIncomeDetails'
 import EditProject from './pages/projects/EditProject'
+import RecordProjectIncome from './pages/projects/RecordProjectIncome'
 
 // Governance Pages
 import GroupMembers from './pages/governance/GroupMembers'
@@ -99,6 +100,7 @@ function App() {
           <Route path="/projects/record" element={<RecordProject />} />
           <Route path="/projects/income" element={<ProjectIncomeDetails />} />
           <Route path="/projects/:id/edit" element={<EditProject />} />
+          <Route path="/projects/:id/income" element={<RecordProjectIncome />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/members" element={<Members />} />
           <Route path="/members/:id" element={<MemberDetails />} />
