@@ -21,22 +21,22 @@ export default function Contributions() {
           </thead>
           <tbody>
             {contributions.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="text-center py-4 text-gray-500">No contributions found.</td>
-              </tr>
-            ) : (
-              contributions.map((c) => (
-                <tr key={c.id} className="border-b">
-                  <td className="px-4 py-2">{c.memberName}</td>
-                  <td className="px-4 py-2">{c.contributionTypeName}</td>
-                  <td className="px-4 py-2">KES {c.amount.toLocaleString()}</td>
-                  <td className="px-4 py-2">{new Date(c.date).toLocaleDateString()}</td>
-                  <td className="px-4 py-2 capitalize">{c.status}</td>
-                  <td className="px-4 py-2">
-                    <Link to={`/contributions/${c.id}`} className="text-blue-600 hover:underline">View</Link>
-                  </td>
+                <tr>
+                  <td colSpan={6} className="text-center py-4 text-gray-500">No contributions found.</td>
                 </tr>
-              ))
+              ) : (
+                contributions.map((c) => (
+                  <tr key={c.id} className="border-b">
+                    <td className="px-4 py-2">{c.memberName}</td>
+                    <td className="px-4 py-2">{c.contributionTypeName}</td>
+                    <td className="px-4 py-2">KES {c.amount.toLocaleString()}</td>
+                    <td className="px-4 py-2">{new Date(c.date).toLocaleDateString()}</td>
+                    <td className="px-4 py-2 capitalize">{c.status}</td>
+                    <td className="px-4 py-2">
+                      <Link to={`/contributions/${c.id}`} className="text-blue-600 hover:underline">View</Link>
+                    </td>
+                  </tr>
+                ))
             )}
           </tbody>
         </table>
