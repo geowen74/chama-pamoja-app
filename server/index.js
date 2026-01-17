@@ -7,6 +7,9 @@ const PORT = 4000;
 app.use(cors());
 app.use(bodyParser.json());
 
+const profileRouter = require('./profile');
+app.use('/api', profileRouter);
+
 let contributions = [];
 
 // Get all contributions
