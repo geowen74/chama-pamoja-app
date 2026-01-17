@@ -169,13 +169,25 @@ export default function Projects() {
             )
 
             return project.status === 'active' ? (
-              <Link
-                key={project.id}
-                to={`/projects/${project.id}`}
-                className="card hover:shadow-xl hover:shadow-primary-100/50 transition-all duration-300 group"
-              >
+              <div key={project.id} className="card hover:shadow-xl hover:shadow-primary-100/50 transition-all duration-300 group">
                 {cardContent}
-              </Link>
+                <div className="flex gap-2 mt-2">
+                  <Link
+                    to={`/projects/${project.id}/edit`}
+                    className="btn btn-secondary"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    Edit Project
+                  </Link>
+                  <Link
+                    to={`/projects/${project.id}`}
+                    className="btn btn-accent"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
             ) : (
               <div
                 key={project.id}
