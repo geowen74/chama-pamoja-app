@@ -55,14 +55,14 @@ export type Permission =
   | 'manage_fine_types'
 
 // Define role types
-export type UserRole = 
-  | 'admin' 
-  | 'chairman' 
-  | 'vice_chairman' 
-  | 'treasurer' 
-  | 'vice_treasurer' 
-  | 'secretary' 
-  | 'vice_secretary' 
+export type UserRole =
+  | 'admin'
+  | 'chairman'
+  | 'vice_chairman'
+  | 'treasurer'
+  | 'vice_treasurer'
+  | 'secretary'
+  | 'vice_secretary'
   | 'member'
 
 // Role descriptions for display
@@ -102,7 +102,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'view_reports', 'export_reports',
     'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
   ],
-  member: [
+  chairman: [
     'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
     'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
     'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
@@ -196,92 +196,7 @@ export const SENSITIVE_ACTIONS: Permission[] = [
   'waive_fines',
   'edit_settings',
   'manage_contribution_types',
-],
-  treasurer: [
-    // All permissions
-    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
-    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
-    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
-    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
-    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
-    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
-    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
-    'view_reports', 'export_reports',
-    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
-  ],
-  vice_treasurer: [
-    // All permissions
-    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
-    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
-    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
-    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
-    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
-    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
-    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
-    'view_reports', 'export_reports',
-    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
-  ],
-  secretary: [
-    // All permissions
-    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
-    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
-    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
-    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
-    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
-    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
-    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
-    'view_reports', 'export_reports',
-    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
-  ],
-  vice_secretary: [
-    // All permissions
-    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
-    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
-    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
-    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
-    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
-    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
-    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
-    'view_reports', 'export_reports',
-    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
-  ],
-  member: [
-    'view_members', 'add_members', 'edit_members', 'delete_members', 'change_member_roles',
-    'view_contributions', 'add_contributions', 'edit_contributions', 'confirm_contributions', 'delete_contributions',
-    'view_loans', 'apply_loan', 'approve_loans', 'reject_loans', 'disburse_loans', 'record_repayments',
-    'view_meetings', 'schedule_meetings', 'edit_meetings', 'delete_meetings', 'record_attendance',
-    'view_expenses', 'add_expenses', 'edit_expenses', 'approve_expenses', 'delete_expenses',
-    'view_projects', 'add_projects', 'edit_projects', 'delete_projects',
-    'view_fines', 'add_fines', 'edit_fines', 'waive_fines', 'delete_fines',
-    'view_reports', 'export_reports',
-    'view_settings', 'edit_settings', 'manage_contribution_types', 'manage_loan_types', 'manage_fine_types',
-  ]
-};
-
-// Sensitive actions that require PIN/password verification
-export const SENSITIVE_ACTIONS: Permission[] = [
-  'approve_loans',
-  'reject_loans',
-  'disburse_loans',
-  'approve_expenses',
-  'delete_members',
-  'change_member_roles',
-  'delete_contributions',
-  'delete_expenses',
-  'delete_projects',
-  'delete_fines',
-  'waive_fines',
-  'edit_settings',
-  'manage_contribution_types',
-];
-
-/**
- * Hook to check if the current user can edit (legacy)
- */
-export function useCanEdit(): boolean {
-  const { user } = useAuthStore()
-  return canEdit(user?.role)
-}
+]
 
 /**
  * Hook to get the current user's role
